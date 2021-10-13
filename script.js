@@ -3,14 +3,19 @@ let userGuess = document.querySelector(".guess"),
   message = document.querySelector(".message");
 let score = document.querySelector(".score");
 let checkButton = document.querySelector(".check");
-const randomNumber = Math.ceil(Math.random() * 20);
+let randomNumber = Math.ceil(Math.random() * 20);
 let totalScore = 20;
+let highScore = 0;
 function gameLogic() {
   if (Number(userGuess.value) == randomNumber) {
     message.textContent = "You Have Got It";
+    if (totalScore > highScore) {
+      highScore = totalScore;
+    }
     document.querySelector(".number").textContent = randomNumber;
     document.querySelector(".number").style.width = "25rem";
     document.querySelector("body").style.backgroundColor = "#60b347";
+    document.querySelector(".highscore").textContent = highScore;
   } else {
     totalScore--;
     if (Number(userGuess.value) > randomNumber) {
@@ -39,5 +44,12 @@ checkButton.addEventListener("click", gameLogic);
 
 const again = document.querySelector(".again");
 again.addEventListener("click", function () {
-  location.reload();
+  document.querySelector(".number").textContent = "?";
+  document.querySelector(".number").style.width = "15rem";
+  document.querySelector("body").style.backgroundColor = "#222";
+  score.textContent = 20;
+  message.textContent = "Start Guessing...";
+  randomNumber = Math.ceil(Math.random() * 20);
+  userGuess.value = " ";
+  totalScore = 20;
 });
